@@ -4,8 +4,15 @@ require 'rspec'
 require 'simplecov'
 require 'simplecov-console'
 
-SimpleCov.formatter = SimpleCov.formatter = SimpleCov::Formatter::Console
-SimpleCov.start
+require_relative './setup_test_database'
+
+ENV['ENVIRONMENT'] = 'test'
+
+RSpec.configure do |config|
+  config.before(:each) do
+    setup_test_database
+  end
+end
 
 RSpec.configure do |config|
   config.after(:suite) do
@@ -14,6 +21,9 @@ RSpec.configure do |config|
     puts "\e[33mTry it now! Just run: rubocop\e[0m"
   end
 end
+
+SimpleCov.formatter = SimpleCov.formatter = SimpleCov::Formatter::Console
+SimpleCov.start
 
 # require our Sinatra app file
 require File.join(File.dirname(__FILE__), '..', 'app.rb')
