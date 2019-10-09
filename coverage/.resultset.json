@@ -258,11 +258,21 @@
       ],
       "/Users/melvinxlau/Devprojects/bookmark-manager-melvin/spec/unit/database_connection_spec.rb": [
         1,
+        null,
+        1,
+        null,
         1,
         1,
         1,
         1,
+        null,
+        null,
+        null,
         1,
+        1,
+        1,
+        1,
+        null,
         null,
         null,
         null
@@ -271,11 +281,14 @@
         1,
         1,
         1,
+        2,
+        null,
+        1,
         1,
         null,
         null
       ]
     },
-    "timestamp": 1570653494
+    "timestamp": 1570654366
   }
 }
