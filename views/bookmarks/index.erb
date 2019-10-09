@@ -5,7 +5,7 @@
  <li class="bookmark" id="bookmark-<%= bookmark.id %>">
    <a href="<%= bookmark.url %>" target="_blank">
      <%= bookmark.title %>
-     <form action="/bookmarks/<%= bookmark.id %>" method="post">
+     <form action="/bookmarks/<%= bookmark.id %>/delete" method="post">
        <input type="hidden" name="_method" value="DELETE">
        <input type="submit" value="Delete">
      </form>
