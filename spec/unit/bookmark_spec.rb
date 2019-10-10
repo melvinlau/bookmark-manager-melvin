@@ -30,6 +30,11 @@ describe Bookmark do
       expect(bookmark.title).to eq 'Makers'
       expect(bookmark.url).to eq 'https://www.makers.tech'
     end
+
+    it "does not create a bookmark if the given URL is invalid" do
+      Bookmark.create(url: 'not a URL', title: 'nada con nada')
+      expect(Bookmark.all).not_to include 'nada con nada'
+    end
   end
 
   describe ".delete" do

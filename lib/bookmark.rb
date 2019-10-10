@@ -1,6 +1,3 @@
-# require 'database_connection'
-# database connection already required in app.rb
-
 class Bookmark
 
   attr_reader :id, :title, :url
@@ -13,6 +10,7 @@ class Bookmark
   end
 
   def self.create(url:, title:)
+    return false unless is_url?(url)
     sql = "INSERT INTO bookmarks (url, title) VALUES('#{url}', '#{title}') RETURNING id, url, title;"
     result = DatabaseConnection.query(sql)
     Bookmark.new(id: result[0]['id'], url: result[0]['url'], title: result[0]['title'])
@@ -37,6 +35,12 @@ class Bookmark
     @id = id
     @title = title
     @url = url
+  end
+
+  private
+
+  def self.is_url?(url)
+    url =~ /\A#{URI::regexp(['http', 'https'])}\z/
   end
 
 end
