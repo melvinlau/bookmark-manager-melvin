@@ -1,3 +1,5 @@
+require_relative 'comment'
+
 class Bookmark
 
   attr_reader :id, :title, :url
@@ -14,6 +16,7 @@ class Bookmark
     sql = "INSERT INTO bookmarks (url, title) VALUES('#{url}', '#{title}') RETURNING id, url, title;"
     result = DatabaseConnection.query(sql)
     Bookmark.new(id: result[0]['id'], url: result[0]['url'], title: result[0]['title'])
+    # returns a new instance of Bookmark with 3 accessible properties: id, url, title
   end
 
   def self.delete(id:)
@@ -29,6 +32,10 @@ class Bookmark
   def self.find(id:)
     result = DatabaseConnection.query("SELECT * FROM bookmarks WHERE id = #{id}")
     Bookmark.new(id: result[0]['id'], url: result[0]['url'], title: result[0]['title'])
+  end
+
+  def comments(comment_class = Comment)
+    comment_class.where(bookmark_id: id)
   end
 
   def initialize(id:, title:, url:)
