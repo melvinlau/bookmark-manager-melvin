@@ -82,7 +82,7 @@ class BookmarkManager < Sinatra::Base
   post '/sessions/destroy' do
     session.clear
     flash[:notice] = 'You have signed out.'
-    redirect('/bookmarks')
+    redirect('/')
   end
 
   # start the server if ruby file executed directly
