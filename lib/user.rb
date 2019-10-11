@@ -22,7 +22,11 @@ class User
   def self.authenticate(email:, password:)
     sql = "SELECT * FROM users WHERE email = '#{email}';"
     result = DatabaseConnection.query(sql)
-    return nil unless result.any? # Guard clause against nonexistent email in dbase
+
+    # Guard clauses against incorrect email or password
+    return nil unless result.any?
+    return nil unless BCrypt::Password.new(result[0]['password']) == password
+
     User.new(id: result[0]['id'], email: result[0]['email'])
   end
 
