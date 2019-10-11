@@ -2,6 +2,7 @@ require_relative 'database_helpers'
 require 'user'
 
 describe User do
+
   describe '.create' do
     it 'creates a new user' do
       user = User.create(email: 'melvin@melvin.com', password: '12345')
@@ -11,5 +12,25 @@ describe User do
       expect(user.id).to eq persisted_data.first['id']
       expect(user.email).to eq 'melvin@melvin.com'
     end
+
+    it 'hashes the password using Bcrypt' do
+      expect(BCrypt::Password).to receive(:create).with('12345')
+      User.create(email: 'melvin@melvin.com', password: '12345')
+    end
   end
+
+  describe '.find' do
+    it 'finds a user by ID and returns the user instance' do
+      user = User.create(email: 'melvin@melvin.com', password: '12345')
+      result = User.find(user.id)
+      expect(result.id).to eq user.id
+      expect(result.email).to eq user.email
+    end
+
+    it 'returns nil if there is no ID given' do
+      expect(User.find(nil)).to eq nil
+    end
+  end
+
+
 end
