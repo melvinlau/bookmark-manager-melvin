@@ -19,6 +19,13 @@ class User
     User.new(id: result[0]['id'], email: result[0]['email'])
   end
 
+  def self.authenticate(email:, password:)
+    sql = "SELECT * FROM users WHERE email = '#{email}';"
+    result = DatabaseConnection.query(sql)
+    return nil unless result.any? # Guard clause against nonexistent email in dbase
+    User.new(id: result[0]['id'], email: result[0]['email'])
+  end
+
   attr_reader :id, :email
 
   def initialize(id:, email:)

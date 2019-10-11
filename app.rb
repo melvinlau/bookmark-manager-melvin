@@ -66,6 +66,18 @@ class BookmarkManager < Sinatra::Base
     redirect '/bookmarks'
   end
 
+  # Sign In
+  post '/users/sessions' do
+    user = User.authenticate(email: params[:signin_email], password: params[:signin_password])
+    if user
+      session[:user_id] = user.id
+      redirect('/bookmarks')
+    else
+      flash[:notice] = "Please check your email or password."
+      redirect('/')
+    end
+  end
+
   # start the server if ruby file executed directly
   run! if app_file == $0
 

@@ -1,6 +1,6 @@
 feature 'User sign up' do
   scenario 'User can create an account' do
-    visit '/users/new'
+    visit '/'
     fill_in 'email', with: 'melvin@melvin.com'
     fill_in 'password', with: '123456'
     click_button 'Sign Up'
